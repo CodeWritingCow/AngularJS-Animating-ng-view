@@ -1,0 +1,83 @@
+/* Make pages full width and height */
+/* Positioned absolutely so pages can overlap each other as they enter and leave */
+.page {
+    bottom: 0;
+    padding-top: 200px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+}
+
+.page h1 { font-size: 60px; }
+.page a { margin-top: 50px; }
+
+
+/* PAGES (specific colors for each page
+=========================================== */
+.page-home { background: #00d0bc; color: #00907c; }
+.page-about { background: #e59400; color: #a55400; }
+.page-contact { background: #ffa6bb; color: #9e0000; }
+
+
+/* ANIMATIONS
+=========================================== */
+
+/* Leaving animations --------------------- */
+/* Rotate and fall */
+@keyframes rotateFall {
+    0% { transform: rotateZ(0deg); }
+    20% { transform: rotateZ(10deg); animation-timing-function: ease-out; }
+    40% { transform: rotateZ(17deg); }
+    60% { transform: rotateZ(16eg); }
+    100% { transform: translateY(100%) rotateZ(17deg); }
+}
+
+/* Slide out from left */
+@keyframes slideOutLeft {
+    to { transform: translateX(-100%); }
+}
+
+/* Rotate out newspaper */
+@keyframes rotateOutNewspaper {
+    to { transform: translateZ(-3000px) rotateZ(360deg); opacity: 0; }
+}
+
+/* Entering animations --------------------- */
+/* Scale up */
+@keyframes scaleUp {
+    from { opacity: 0.3; -webkit-transform: scale(0.8); }
+}
+
+/* Slide in from right */
+@keyframes slideInRight {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+/* Slide in from bottom */
+@keyframes slideInUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+/* All pages will slide out to left when leaving and scale up when entering
+.ng-enter { animation: scaleUp 0.5s both ease-in; z-index: 8888; }
+.ng-leave { animation: slideOutLeft 0.5s both ease-in; z-index: 9999; } 
+    I replace these with the page-specific animations below */
+
+.ng-enter { z-index: 8888; }
+.ng-leave { z-index: 9999; }
+
+/* Page specific animations --------------------- */
+/* Home */
+.page-home.ng-enter { animation: scaleUp 0.5s both ease-in; }
+.page-home.ng-leave { transform-origin: 0% 0%; animation: rotateFall 1s both ease-in; }
+
+/* About */
+.page-about.ng-enter { animation: slideInRight 0.5s both ease-in; }
+.page-about.ng-leave { animation: slideOutLeft 0.5s both ease-in; }
+
+/* Contact */
+.page-contact.ng-enter {transform-origin: 50% 50%; animation: rotateOutNewspaper .5s both ease-in; }
+.page-contact.ng-leave { animation: slideInUp 0.5s both ease-in; }
